@@ -1,0 +1,15 @@
+[S,Training,TrainLables,Unlabled,Unlables,Test,TestLables]=S3VM('C:\Users\HamidReza\Desktop\SSLProject\DataSets\dataset.data1',10,10);
+Threshold=5; T=100; TS=S; TrainingLables=TrainLables; Ulabled=Unlabled; NoNeighbors=0;
+Training=[Training; Unlabled]; LS=[];
+TLables=[TrainLables; TS.UGroup];
+while(T~=0)
+   LS=TS;
+   [TS]=SSSVM(Training,TLables,Unlabled,Unlables,Test,TestLables);
+   A=0; B=size(LS.UGroup,1);
+   for i=1:size(LS.UGroup,1)
+       if(TS.UGroup(i)~=LS.UGroup(i))
+           A=A+1;
+       end
+   end
+   T=floor((A/B)*100);
+end
