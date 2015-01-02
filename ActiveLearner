@@ -1,0 +1,21 @@
+function [Indecies]=ActiveLearner(Unlabled,S,NearestNeighbors,Distance)
+T=[];
+[T.IDX,T.D] = knnsearch(Unlabled,S.SVMStruct.SupportVectors,'k',NearestNeighbors);
+Indecies=[];
+for i=1:size(T.IDX,1)
+    for j=1:size(T.IDX,2)
+       if(T.D(i,j) < Distance)
+           temp=0;
+           if(size(Indecies,1)>0)               
+               for k=1:size(Indecies,2)
+                   if(Indecies(k)== T.IDX(i,j))
+                       temp=1;
+                   end                   
+               end               
+           end
+           if(temp==0)
+               Indecies=[Indecies T.IDX(i,j)];
+           end
+       end
+    end
+end
